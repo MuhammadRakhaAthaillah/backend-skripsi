@@ -778,6 +778,7 @@ example output :
     "message": "User progress retrieved successfully",
     "data": [
         {
+            "workout_id": 229,
             "date": "Tuesday, 18th March 2025",
             "exercises": [
                 {
@@ -1021,4 +1022,16 @@ example output:
             ]
         }
     ]
+}
+
+POST
+/user/input-level/:user_id
+example input:
+{
+    "pull_exercise" : 2 (1 bodyweight row, 2 pull up)
+    "pull_reps" : 5
+    "push_exercise" : 1 (1 push up)
+    "push_reps" : 12
+    "leg_exercise" : 2 (1 bodyweight squat, 2 reverse lunge) 
+    "leg_reps" : 30
 }
