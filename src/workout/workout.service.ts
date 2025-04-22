@@ -1642,6 +1642,93 @@ export class WorkoutService {
     };
   }
   
+  async getHistoryDetail(workout_id: number): Promise<any> {
+    // 1) load the scheduled workout + its exercises
+    const workout = await this.databaseService.workout.findUnique({
+      where: { id: workout_id },
+      include: {
+        exercises: {
+          include: {
+            exercise: {
+              include: {
+                // we only need duration/intensity to calculate restTime
+                group: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    if (!workout) {
+      throw new NotFoundException(`Workout ${workout_id} not found`);
+    }
+  
+    // 2) load the one time the user actually did this workout
+    const progress = await this.databaseService.workout_progress.findFirst({
+      where: { workout_id },
+      include: { exerciseProgress: true },
+    });
+  
+    // pick date & user_id from progress if it exists, else fall back to scheduled
+    const outputDate = progress?.date ?? workout.date;
+    const userId = progress?.user_id ?? null;
+  
+    // helper to get rest time
+    const getRestTime = (intensity: string): number => {
+      switch (intensity.toLowerCase()) {
+        case 'low': return 1;
+        case 'medium': return 2;
+        case 'high': return 4;
+        case 'very high': case 'very_high': return 6;
+        default: return 0;
+      }
+    };
+  
+    // 3) for each assigned workout_exercise, build its sets array
+    const exercises = workout.exercises.map(we => {
+      const ex = we.exercise;
+      const totalSets = we.set;
+      // for quick lookup of recorded sets:
+      const records = new Map<number, typeof progress.exerciseProgress[0]>();
+      if (progress) {
+        for (const ep of progress.exerciseProgress) {
+          if (ep.workout_exercise_id === we.id) {
+            records.set(ep.sets, ep);
+          }
+        }
+      }
+  
+      // now build an array of length totalSets, pulling from records if present
+      const sets = Array.from({ length: totalSets }, (_, idx) => {
+        const setNumber = idx + 1;
+        const rec = records.get(setNumber);
+        const entry: any = { set_number: setNumber, reps: rec ? rec.reps : null };
+        // only include weight_used if this is a weight exercise
+        if (ex.types?.toLowerCase() === 'weight') {
+          entry.weight_used = rec ? rec.weight_used : we.weight;
+        }
+        return entry;
+      });
+  
+      return {
+        workout_exercise_id: we.id,
+        name: ex.name,
+        sets,
+      };
+    });
+  
+    return {
+      statusCode:200,
+      message: "success",
+      data:{      
+        user_id: userId,
+        workout_id: workout.id,
+        date: outputDate,
+        exercises
+      }
+    };
+  }
+  
 
   private getRestTime(intensity: string): number {
     switch (intensity.toLowerCase()) {

@@ -1035,3 +1035,166 @@ example input:
     "leg_exercise" : 2 (1 bodyweight squat, 2 reverse lunge) 
     "leg_reps" : 30
 }
+
+GET
+/workout/history/detail/:workout_id
+example output:
+{
+    "statusCode": 200,
+    "message": "success",
+    "data": {
+        "user_id": 30,
+        "workout_id": 259,
+        "date": "2025-04-22T08:58:11.148Z",
+        "exercises": [
+            {
+                "workout_exercise_id": 986,
+                "name": "Dumbell Romanian Deadlift (6-8) for dumbell (10kg)",
+                "sets": [
+                    {
+                        "set_number": 1,
+                        "reps": 10,
+                        "weight_used": 10
+                    },
+                    {
+                        "set_number": 2,
+                        "reps": 10,
+                        "weight_used": 10
+                    },
+                    {
+                        "set_number": 3,
+                        "reps": 10,
+                        "weight_used": 10
+                    },
+                    {
+                        "set_number": 4,
+                        "reps": 10,
+                        "weight_used": 10
+                    }
+                ]
+            },
+            {
+                "workout_exercise_id": 987,
+                "name": "Reverse lunge (6-12)",
+                "sets": [
+                    {
+                        "set_number": 1,
+                        "reps": 10,
+                        "weight_used": 10
+                    },
+                    {
+                        "set_number": 2,
+                        "reps": 10,
+                        "weight_used": 10
+                    },
+                    {
+                        "set_number": 3,
+                        "reps": 10,
+                        "weight_used": 10
+                    },
+                    {
+                        "set_number": 4,
+                        "reps": 10,
+                        "weight_used": 10
+                    }
+                ]
+            },
+            {
+                "workout_exercise_id": 988,
+                "name": "Knee Push up (3-12)",
+                "sets": [
+                    {
+                        "set_number": 1,
+                        "reps": 10
+                    },
+                    {
+                        "set_number": 2,
+                        "reps": 10
+                    },
+                    {
+                        "set_number": 3,
+                        "reps": 10
+                    },
+                    {
+                        "set_number": 4,
+                        "reps": 10
+                    }
+                ]
+            },
+            {
+                "workout_exercise_id": 989,
+                "name": "Bodyweight row (3-6)",
+                "sets": [
+                    {
+                        "set_number": 1,
+                        "reps": 10
+                    },
+                    {
+                        "set_number": 2,
+                        "reps": 10
+                    },
+                    {
+                        "set_number": 3,
+                        "reps": 10
+                    },
+                    {
+                        "set_number": 4,
+                        "reps": 10
+                    }
+                ]
+            },
+            {
+                "workout_exercise_id": 990,
+                "name": "Dumbell bicep curl (8-12)",
+                "sets": [
+                    {
+                        "set_number": 1,
+                        "reps": 10,
+                        "weight_used": 10
+                    },
+                    {
+                        "set_number": 2,
+                        "reps": 10,
+                        "weight_used": 10
+                    },
+                    {
+                        "set_number": 3,
+                        "reps": 10,
+                        "weight_used": 10
+                    },
+                    {
+                        "set_number": 4,
+                        "reps": 10,
+                        "weight_used": 10
+                    }
+                ]
+            },
+            {
+                "workout_exercise_id": 991,
+                "name": "Side lateral raise (5-15)",
+                "sets": [
+                    {
+                        "set_number": 1,
+                        "reps": 10,
+                        "weight_used": 10
+                    },
+                    {
+                        "set_number": 2,
+                        "reps": 10,
+                        "weight_used": 10
+                    },
+                    {
+                        "set_number": 3,
+                        "reps": 10,
+                        "weight_used": 10
+                    },
+                    {
+                        "set_number": 4,
+                        "reps": 10,
+                        "weight_used": 10
+                    }
+                ]
+            }
+        ]
+    }
+}
