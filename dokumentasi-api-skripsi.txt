@@ -619,69 +619,45 @@ workout/detail/:workout_id (ganti id workoutnya, dari output yg di atas tuh ada 
 example output :
 {
     "user_id": null,
-    "workout_id": 229,
-    "date": "2025-03-18T06:31:39.255Z",
+    "workout_id": 281,
+    "date": "2025-04-26T08:43:31.080Z",
     "exercises": [
         {
-            "workout_exercise_id": 885,
-            "name": "Dumbell Romanian Deadlift (6-8) for dumbell (20kg)",
-            "exercise_cd": "DRDL",
+            "workout_exercise_id": 1096,
+            "exercise_id": 74,
+            "name": "Deadlift (4-8) - (100kg)",
+            "image": null,
+            "exercise_cd": "LD",
             "type": "weight",
             "sets": [
                 {
                     "set_number": 1,
                     "reps": null,
-                    "weight_used": null
+                    "weight_used": 100
                 },
                 {
                     "set_number": 2,
                     "reps": null,
-                    "weight_used": null
+                    "weight_used": 100
                 },
                 {
                     "set_number": 3,
                     "reps": null,
-                    "weight_used": null
+                    "weight_used": 100
                 },
                 {
                     "set_number": 4,
                     "reps": null,
-                    "weight_used": null
+                    "weight_used": 100
                 }
             ]
         },
         {
-            "workout_exercise_id": 886,
-            "name": "Reverse lunge (6-12) for dumbbell (20kg)",
-            "exercise_cd": "LRL",
-            "type": "weight",
-            "sets": [
-                {
-                    "set_number": 1,
-                    "reps": null,
-                    "weight_used": null
-                },
-                {
-                    "set_number": 2,
-                    "reps": null,
-                    "weight_used": null
-                },
-                {
-                    "set_number": 3,
-                    "reps": null,
-                    "weight_used": null
-                },
-                {
-                    "set_number": 4,
-                    "reps": null,
-                    "weight_used": null
-                }
-            ]
-        },
-        {
-            "workout_exercise_id": 887,
-            "name": "Pull up (6-12)",
-            "exercise_cd": "PLU",
+            "workout_exercise_id": 1097,
+            "exercise_id": 90,
+            "name": "half tuck front lever",
+            "image": null,
+            "exercise_cd": "PUFL",
             "type": "bodyweight",
             "sets": [
                 {
@@ -703,8 +679,36 @@ example output :
             ]
         },
         {
-            "workout_exercise_id": 888,
+            "workout_exercise_id": 1098,
+            "exercise_id": 86,
+            "name": "One arm bodyweight row (6-12)",
+            "image": null,
+            "exercise_cd": "BR",
+            "type": "bodyweight",
+            "sets": [
+                {
+                    "set_number": 1,
+                    "reps": null
+                },
+                {
+                    "set_number": 2,
+                    "reps": null
+                },
+                {
+                    "set_number": 3,
+                    "reps": null
+                },
+                {
+                    "set_number": 4,
+                    "reps": null
+                }
+            ]
+        },
+        {
+            "workout_exercise_id": 1099,
+            "exercise_id": 13,
             "name": "High one arm Push up (3-6)",
+            "image": null,
             "exercise_cd": "PU",
             "type": "bodyweight",
             "sets": [
@@ -727,30 +731,32 @@ example output :
             ]
         },
         {
-            "workout_exercise_id": 889,
+            "workout_exercise_id": 1100,
+            "exercise_id": 23,
             "name": "Side lateral raise (5-15)",
+            "image": null,
             "exercise_cd": "LR",
             "type": "weight",
             "sets": [
                 {
                     "set_number": 1,
                     "reps": null,
-                    "weight_used": null
+                    "weight_used": 10
                 },
                 {
                     "set_number": 2,
                     "reps": null,
-                    "weight_used": null
+                    "weight_used": 10
                 },
                 {
                     "set_number": 3,
                     "reps": null,
-                    "weight_used": null
+                    "weight_used": 10
                 },
                 {
                     "set_number": 4,
                     "reps": null,
-                    "weight_used": null
+                    "weight_used": 10
                 }
             ]
         }
@@ -1049,7 +1055,9 @@ example output:
         "exercises": [
             {
                 "workout_exercise_id": 986,
+                "exercise_id": 98,
                 "name": "Dumbell Romanian Deadlift (6-8) for dumbell (10kg)",
+                "image": null,
                 "sets": [
                     {
                         "set_number": 1,
@@ -1075,7 +1083,9 @@ example output:
             },
             {
                 "workout_exercise_id": 987,
+                "exercise_id": 48,
                 "name": "Reverse lunge (6-12)",
+                "image": null,
                 "sets": [
                     {
                         "set_number": 1,
@@ -1101,7 +1111,9 @@ example output:
             },
             {
                 "workout_exercise_id": 988,
+                "exercise_id": 9,
                 "name": "Knee Push up (3-12)",
+                "image": null,
                 "sets": [
                     {
                         "set_number": 1,
@@ -1123,7 +1135,9 @@ example output:
             },
             {
                 "workout_exercise_id": 989,
+                "exercise_id": 80,
                 "name": "Bodyweight row (3-6)",
+                "image": null,
                 "sets": [
                     {
                         "set_number": 1,
@@ -1145,7 +1159,9 @@ example output:
             },
             {
                 "workout_exercise_id": 990,
+                "exercise_id": 26,
                 "name": "Dumbell bicep curl (8-12)",
+                "image": null,
                 "sets": [
                     {
                         "set_number": 1,
@@ -1171,7 +1187,9 @@ example output:
             },
             {
                 "workout_exercise_id": 991,
+                "exercise_id": 19,
                 "name": "Side lateral raise (5-15)",
+                "image": null,
                 "sets": [
                     {
                         "set_number": 1,
@@ -1196,5 +1214,24 @@ example output:
                 ]
             }
         ]
+    }
+}
+
+GET
+exercise/description/:exercise_id
+example output :
+{
+    "statusCode": 200,
+    "message": "success",
+    "data": {
+        "id": 9,
+        "exercise_cd": "PU",
+        "name": "Knee Push up (3-12)",
+        "intensity": "medium",
+        "duration": 2,
+        "types": "bodyweight",
+        "max_rep": 12,
+        "image": null,
+        "description": "\n# Push-Up\n\n**Equipment:** Bodyweight  \n**Primary Muscles:** Chest, Triceps, Shoulders  \n\n---\n\n## 1. Starting Position\n- Place your hands slightly wider than shoulder-width on the floor.  \n- Extend your legs behind you, balancing on the balls of your feet.  \n- Keep your body in one straight line from head to heels (no sagging hips).\n\n## 2. Lowering Phase\n1. Inhale and bend your elbows, lowering your chest toward the floor.  \n2. Keep your elbows at about a 45° angle to your torso.  \n3. Descend until your chest is just a few inches above the ground.\n\n## 3. Pressing Phase\n1. Exhale and press firmly through your palms, extending your arms.  \n2. Drive your body back up to the starting position.\n\n---\n\n## Tips & Common Mistakes\n- **Core tightness:** Brace your abs and glutes to maintain a neutral spine.  \n- **Elbow tracking:** Avoid flaring elbows straight out—tuck them slightly.  \n- **Head position:** Keep your neck long; don’t crane your head up or let it drop.\n\n## Progressions & Variations\n- **Knee Push-Up:** Hands on floor, knees on ground (easier).  \n- **Incline Push-Up:** Hands elevated on bench or box.  \n- **Decline Push-Up:** Feet elevated (harder).  \n- **Diamond Push-Up:** Hands close together under chest for triceps focus.\n\n"
     }
 }

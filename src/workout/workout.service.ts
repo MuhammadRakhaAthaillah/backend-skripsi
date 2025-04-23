@@ -1371,6 +1371,7 @@ export class WorkoutService {
       });
       return {
         workout_exercise_id: we.id,
+        exercise_id: we.exercise_id,
         name: ex.name,
         image: ex.image,
         exercise_cd: ex.exercise_cd,
@@ -1712,7 +1713,9 @@ export class WorkoutService {
   
       return {
         workout_exercise_id: we.id,
+        exercise_id: we.exercise_id,
         name: ex.name,
+        image: ex.image,
         sets,
       };
     });
