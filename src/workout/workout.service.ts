@@ -1714,6 +1714,7 @@ export class WorkoutService {
       return {
         workout_exercise_id: we.id,
         exercise_id: we.exercise_id,
+        exercise_cd: ex.exercise_cd,
         name: ex.name,
         image: ex.image,
         sets,
