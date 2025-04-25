@@ -433,7 +433,11 @@ export class WorkoutService {
         },
       });
     }
-    return workoutPerWeekRecord;
+    return {
+      statusCode: 200,
+      message: "success",
+      data: workoutPerWeekRecord
+    };
   }
 
   async generateWorkoutPlan(userId: number): Promise<any> {
@@ -793,7 +797,11 @@ export class WorkoutService {
         },
       });
     }
-    return workoutPerWeekRecord;
+    return {
+      statusCode: 200,
+      message: "success",
+      data: workoutPerWeekRecord
+    };
   }
 
   async getWorkoutPlan(workout_per_week_id: number) {
@@ -1173,35 +1181,35 @@ export class WorkoutService {
         });
       });
   
-      const exercises = Array.from(groupMap.values()).map((group) => {
-        group.records.sort((a, b) => a.set - b.set);
-        const reps = group.records.map((r) => r.reps);
-        const weightUsed = group.records.map((r) => r.weight_used);
-        const duration = group.exercise.duration || 0;
-        const restTime = duration ? this.getRestTime(group.exercise.intensity) : 0;
-        const totalDuration = duration + restTime;
-        const musclesHit = group.exercise.muscles.map((em: any) => em.muscle.name);
+      // const exercises = Array.from(groupMap.values()).map((group) => {
+      //   group.records.sort((a, b) => a.set - b.set);
+      //   const reps = group.records.map((r) => r.reps);
+      //   const weightUsed = group.records.map((r) => r.weight_used);
+      //   const duration = group.exercise.duration || 0;
+      //   const restTime = duration ? this.getRestTime(group.exercise.intensity) : 0;
+      //   const totalDuration = duration + restTime;
+      //   const musclesHit = group.exercise.muscles.map((em: any) => em.muscle.name);
   
-        const out: any = {
-          workout_exercise_id: group.exercise.id,
-          name: group.exercise.name,
-          reps,
-          musclesHit,
-          totalDuration,
-        };
-        if (
-          group.exercise.types &&
-          group.exercise.types.toLowerCase() !== 'bodyweight'
-        ) {
-          out.weight_used = weightUsed;
-        }
-        return out;
-      });
+      //   const out: any = {
+      //     workout_exercise_id: group.exercise.id,
+      //     name: group.exercise.name,
+      //     reps,
+      //     musclesHit,
+      //     totalDuration,
+      //   };
+      //   if (
+      //     group.exercise.types &&
+      //     group.exercise.types.toLowerCase() !== 'bodyweight'
+      //   ) {
+      //     out.weight_used = weightUsed;
+      //   }
+      //   return out;
+      // });
   
       return {
         workout_id: wp.workout_id,
         date: formattedDate,
-        exercises,
+        //exercises,
       };
     });
   
@@ -1321,14 +1329,18 @@ export class WorkoutService {
         workout_id: workout.id,
         date: formattedDate,
         status: status,
-        exercises: exercisesArr,
+        //exercises: exercisesArr,
+        musclePoints,
         totalWorkoutDuration: dayTotalDuration,
       });
     }
 
     return {
-      workouts: formattedWorkouts,
-      musclePoints: musclePoints,
+      statusCode:200,
+      message: "success",
+      data : formattedWorkouts
+      //workouts: formattedWorkouts,
+      //musclePoints: musclePoints,
     };
   }
 
@@ -1381,10 +1393,14 @@ export class WorkoutService {
     });
 
     return {
-      user_id: null,
-      workout_id: workout.id,
-      date: outputDate,
-      exercises: exercisesDetailed,
+      statusCode: 200,
+      message : "success",
+      data: {
+        user_id: null,
+        workout_id: workout.id,
+        date: outputDate,
+        exercises: exercisesDetailed,
+      }
     };
   }
 

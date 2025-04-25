@@ -777,7 +777,7 @@ Get
 /user/:user_id (ganti sama id usernya)
 
 Get 
-/workout/progress/:user_id (ganti sama id usernya)
+/workout/progress/get/:user_id (ganti sama id usernya)
 example output : 
 {
     "statusCode": 200,
