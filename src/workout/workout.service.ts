@@ -1559,6 +1559,7 @@ export class WorkoutService {
           reps: ep.reps,
           weight_used: ep.weight_used ?? null,
           exercise: ep.workout_exercise.exercise,
+          exercise_id: ep.workout_exercise.exercise.id,
           exercise_cd: ep.workout_exercise.exercise.exercise_cd,
         });
       });
@@ -1645,6 +1646,7 @@ export class WorkoutService {
   
       // Push exercise history into main history array
       history.push({
+        exercise_id: records[0].exercise_id,
         exercise_cd,
         exercise_name: records[0].exercise.name,
         exercise_image: records[0].exercise.image || null,
