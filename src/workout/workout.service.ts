@@ -1218,25 +1218,47 @@ export class WorkoutService {
   
 
   async getUserWorkouts(userId: number): Promise<any> {
+    // 1) skip any pending workouts older than yesterday
     const yesterdayEnd = moment().subtract(1, 'days').endOf('day').toDate();
     await this.databaseService.workout.updateMany({
-      data: {
-        status: 'skipped',
-      },
+      data: { status: 'skipped' },
       where: {
         status: 'pending',
-        date: {
-          lte: yesterdayEnd,
-        },
+        date: { lte: yesterdayEnd },
         perWeek: {
           some: {
-            workoutperweek: {
-              user_id: userId,
-            },
+            workoutperweek: { user_id: userId },
           },
         },
       },
     });
+  
+    // ────────────────────────────────────────────────────────────────────────────
+    // 2) check for any workouts scheduled over the next 7 days
+    const now = moment().toDate();
+    const weekEnd = moment().add(7, 'days').endOf('day').toDate();
+  
+    const upcomingCount = await this.databaseService.workout.count({
+      where: {
+        date: {
+          gte: now,
+          lte: weekEnd,
+        },
+        perWeek: {
+          some: {
+            workoutperweek: { user_id: userId },
+          },
+        },
+      },
+    });
+  
+    // 3) if none, generate a fresh 7-day plan
+    if (upcomingCount === 0) {
+      await this.generateWorkoutPlan(userId);
+    }
+    // ────────────────────────────────────────────────────────────────────────────
+  
+    // now fetch all workouts (old and new)...
     const wpwRecords = await this.databaseService.workoutperweek.findMany({
       where: { user_id: userId },
       include: {
@@ -1261,88 +1283,77 @@ export class WorkoutService {
         },
       },
     });
-
-    // Flatten workouts from all workoutperweek records.
+  
+    // flatten, sort, format, etc.
     let workouts = [];
     wpwRecords.forEach((wpw) => {
-      wpw.workouts.forEach((wEntry) => {
-        workouts.push(wEntry.workout);
-      });
+      wpw.workouts.forEach((wEntry) => workouts.push(wEntry.workout));
     });
     if (workouts.length === 0)
-      throw new NotFoundException(
-        `No workouts found for user with id ${userId}`,
-      );
-
-    // Sort workouts by date ascending.
+      throw new NotFoundException(`No workouts found for user with id ${userId}`);
+  
     workouts.sort(
       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
     );
-
+  
     const formattedWorkouts = [];
     const musclePoints: Record<string, number> = {};
-
+  
     for (const workout of workouts) {
-      // Format the workout date using Moment.js.
       const formattedDate = moment(workout.date).format('dddd, Do MMMM YYYY');
-      const status = workout.status;
-      const exercisesArr = [];
       let dayTotalDuration = 0;
-
-      // Iterate over each workout_exercise record.
+      const exercisesArr = [];
+  
       for (const we of workout.exercises) {
         const ex = we.exercise;
         const duration = ex.duration || 0;
         const restTime = duration ? this.getRestTime(ex.intensity) : 0;
         const totalDuration = (duration + restTime) * we.set;
         dayTotalDuration += totalDuration;
-
-        // Retrieve muscles hit.
+  
         const musclesHit = ex.muscles.map((em: any) => {
           const mName = em.muscle.name;
           musclePoints[mName] = (musclePoints[mName] || 0) + we.set * em.rating;
           return mName;
         });
-
-        // Get group info from the first excercise_group record if available.
+  
         let groupInfo = null;
-        if (ex.group && ex.group.length > 0 && ex.group[0].group) {
+        if (ex.group?.length) {
           groupInfo = {
             name: ex.group[0].group.name,
             difficulty: ex.group[0].difficulty || null,
           };
         }
-
+  
         exercisesArr.push({
           workout_exercise_id: we.id,
           name: ex.name,
           sets: we.set,
           reps: we.reps,
           weight: we.weight,
-          totalDuration: totalDuration,
-          musclesHit: musclesHit,
+          totalDuration,
+          musclesHit,
           group: groupInfo,
         });
       }
-
+  
       formattedWorkouts.push({
         workout_id: workout.id,
         date: formattedDate,
-        status: status,
-        //exercises: exercisesArr,
+        status: workout.status,
+        // exercises: exercisesArr,  // you can re-enable if you want to surface them
         musclePoints,
         totalWorkoutDuration: dayTotalDuration,
       });
     }
-
+  
     return {
-      statusCode:200,
-      message: "success",
-      data : formattedWorkouts
-      //workouts: formattedWorkouts,
-      //musclePoints: musclePoints,
+      statusCode: 200,
+      message: 'success',
+      data: formattedWorkouts,
     };
   }
+  
 
   async getWorkoutById(workoutId: number): Promise<any> {
     const workout = await this.databaseService.workout.findUnique({
